@@ -1,0 +1,40 @@
+{extend name='base1'/}
+{block name='content'/}
+<div class="row">
+    <div class="col-lg-8 col-lg-offset-2 page-header">
+        <h3>发表文章</h3>
+    </div>
+    <div class="col-lg-8 col-lg-offset-2">
+        <form class="form-horizontal" action="{:url('index/news/doUpload')}" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <input type="hidden" name="txt" id="txt">
+            </div>
+            {if $news}<input type="hidden" name="id" value="{$news.id}">{/if}
+            <div class="form-group">
+                <label for="title">主题</label>
+                <input class="form-control" type="text" id="title" name="title" {if $news} value="{$news.title}" {/if}>
+            </div>
+            <div class="form-group">
+                <label for="cat">分类选择</label>
+                <select id="cat" name="category" class="form-control">
+                    {volist name='cats' id='cat'}
+                    <option value="{$cat.id}"  {if $news} {if $news.category==$cat.id} selected="selected" {/if} {/if}>{$cat.name}</option>
+                    {/volist}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="face">视频封面{if $news}:如果不修改封面图请将该字段留空{/if}</label>
+                <input class="form-control" type="file" id="face" name="face"  >
+            </div>
+            <div class="form-group">
+                <label for="video">视频 {if $news} :如果不修改视频请将该字段留空{/if}</label>
+                <input class="form-control" type="file" id="video" name="video">
+            </div>
+            <div>
+                <button id="sub-btn" class="btn btn-default">发表</button>
+            </div>
+        </form>
+    </div>
+    <br>
+</div>
+{/block}

@@ -1,0 +1,79 @@
+{extend name='base1'/}
+{block name='content'/}
+<section class="content-wrap">
+    <div class="container">
+        <div class="row">
+            <main class="col-md-6 col-md-offset-2 main-content">
+                <div class="page-header">
+                    新闻收藏
+                </div>
+                {if $cols}
+                {volist name='cols' id='col'}
+                <div class="list-group-item" data-id="n{$col.id}">
+                    <p><span class="label label-success">{$col.typeName}</span>&nbsp;<a
+                            href="{:url('index/news/detail')}?id={$col.ref_id}">{$col.title}</a>&nbsp;<button
+                            class="btn btn-default pull-right cancle" data-id="{$col.ref_id}">取消收藏
+                    </button>
+                    </p>
+                </div>
+                {/volist}
+                {/if}
+            </main>
+
+        </div>
+
+        <div class="row">
+            <main class="col-md-6 col-md-offset-2 main-content">
+                <div class="page-header">
+                    帖子收藏
+                </div>
+                {if $posts}
+                {volist name='posts' id='post'}
+                <div class="list-group-item" data-id="p{$post.id}">
+                    <p>&nbsp;<a href="{:url('index/post/detail')}?id={$post.ref_id}">{$post.title}</a>&nbsp;<button
+                            class="btn btn-default pull-right cancle1" data-id="{$post.ref_id}">取消收藏
+                    </button>
+                    </p>
+                </div>
+                {/volist}
+                {/if}
+            </main>
+        </div>
+    </div>
+</section>
+<br>
+<script>
+    $(".cancle").click(function (event) {
+        var id = $(this).attr('data-id');
+        $.ajax({
+            url: "{:url('index/news/dis_collect')}",
+            type: "post",
+            dataType: 'json',
+            data: {id: id},
+            xhrFields: {withCredentials: true},
+            success: function (msg) {
+                alert(msg.msg);
+                if (msg.code) {
+                    $(".list-group-item[data-id=n" + id + "]").hide();
+                }
+            }
+        })
+    })
+    $(".cancle1").click(function (event) {
+        var id = $(this).attr('data-id');
+        $.ajax({
+            url: "{:url('index/post/dis_collect')}",
+            type: "post",
+            dataType: 'json',
+            data: {id: id},
+            xhrFields: {withCredentials: true},
+            success: function (msg) {
+                alert(msg.msg);
+                if (msg.code) {
+                    $(".list-group-item[data-id=p" + id + "]").hide();
+                }
+            }
+        })
+    })
+</script>
+{/block}

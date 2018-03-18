@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+    <meta name="renderer" content="webkit" />
+    <title>侃球吧</title>
+
+    <link rel="stylesheet" type="text/css" href="__STATIC__/static/css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/static/css/icon.css" />
+
+    <link href="__STATIC__/static/css/common.css?v=20140930" rel="stylesheet" type="text/css" />
+    <link href="__STATIC__/static/css/link.css?v=20140930" rel="stylesheet" type="text/css" />
+    <link href="__STATIC__/static/css/style.css?v=20140930" rel="stylesheet" type="text/css" />
+
+
+    <script src="__STATIC__/static/js/jquery.2.js?v=20140930" type="text/javascript"></script>
+    <script src="__STATIC__/static/js/jquery.form.js?v=20140930" type="text/javascript"></script>
+    <script src="__STATIC__/static/js/plug-in_module.js?v=20140930" type="text/javascript"></script>
+    <script src="__STATIC__/static/js/aws.js?v=20140930" type="text/javascript"></script>
+    <script src="__STATIC__/static/js/aw_template.js?v=20140930" type="text/javascript"></script>
+    <script src="__STATIC__/static/js/app.js?v=20140930" type="text/javascript"></script>
+    <script type="text/javascript" src="__STATIC__/static/js/compatibility.js"></script>
+    <!--[if lte IE 8]>
+	<script type="text/javascript" src="__STATIC__/static/js/respond.js"></script>
+<![endif]-->
+</head>
+
+<body>
+<body>
+<div class="aw-top-menu-wrap">
+    <div class="container">
+
+        <div class="aw-top-nav navbar">
+            <div class="navbar-header">
+                <button  class="navbar-toggle pull-left">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <nav role="navigation" class="collapse navbar-collapse bs-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="{:url('index/post/index')}" class=""><i class="icon icon-ul"></i> 侃球吧---球迷论坛</a></li>
+                    <li><a href="{:url('index/index/index')}" ><i class="icon"></i> 侃球吧首页</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="aw-user-nav">
+            {if !$Think.session.user_id}
+            <span>
+						<a class="register btn btn-normal btn-success" href="{:url('index/user/register')}">注册</a>
+						<a class="login btn btn-normal btn-primary" href="{:url('index/user/login')}/">登录</a>
+					</span>
+            {else/}
+            <li role="presentation" class="nav navbar-nav navbar-right" style="padding-top: 0.35em;">
+                <div class="glyphicon glyphicon-user text-success">&nbsp;{$Think.session.user_name}&nbsp;<span><a href="{:url('index/user/logout')}">退出</a></span></div></li>            {/if}
+        </div>
+
+    </div>
+</div>
+
+<div class="aw-container-wrap">
+    <div class="container">
+        <div class="row">
+            <div class="aw-content-wrap clearfix">
+                <div class="col-sm-12 col-md-9 aw-mais=content">
+
+                    <div class="post-header">
+                        <div class="">
+								<h3 class="text-center" style="font-size:2em; padding-top: 1em;">{$post.title}</h3>
+                        </div>
+                        <button class="btn center-block" id="collect" data-status="{$post.is_collected}">
+                            <a class="glyphicon glyphicon-align-left"><a id="btn-text">{if $post.is_collected}取消收藏{else/}收藏</a>{/if}</a>
+                        </button>
+                    </div>
+                    <hr>
+                    <div class="aw-mod aw-question-detail">
+                        <div class="mod-body">
+                            {$post.content}
+                        </div>
+                        <div class="mod-footer">
+                            <div class="meta">
+                                <span class="text-color-999">{:date('Y-m-d H:i:s',$post.post_at)}</span>
+                                <span><a href="{:url('index/post/post')}?id={$post.id}">编辑</a></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="aw-mod aw-question-comment">
+                        <div class="mod-head">
+                            <ul class="nav nav-tabs aw-nav-tabs active">
+
+                                <h2 class="hidden-xs" id="comments_count" data-num="{$post.comments_count}">{$post.comments_count} 个回复</h2>
+                            </ul>
+                        </div>
+                        <div class="mod-body aw-feed-list">
+
+                        </div>
+                    </div>
+                    <hr id="line">
+                    <!-- end 问题详细模块 -->
+                    {volist name='comments' id='comment'}
+                    <div class="row comment" data-id="{$comment.id}">
+                        <div class="col-lg-10">
+                            <div class="media">
+                                <div class="media-left media-middle col-lg-2">
+                                    <div class="center-block"><span class="label label-default">{$comment.user.name}</span></div>
+                                </div>
+                                <div class="media-body col-lg-offset-2">
+                                    {$comment.content}
+                                    <br>
+                                    <div class="pull-right">
+                                        {if $Think.session.role==2}
+                                        <span class="del-comment" id="{$comment.id}"><button>删除</button></span>
+                                        {/if}
+                                        <span>{:date('Y-m-d H:i',$comment.at)}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    {/volist}
+                    {if $comments}
+                    {$comments->render()}
+                    {/if}
+                    {if !$Think.session.user_id}
+                    <div class="aw-mod aw-replay-box question">
+                        <a name="answer_form"></a>
+                        <p align="center">要回复问题请先<a href="{:url('index/user/login')}">登录</a></p>
+                    </div>
+                    {else/}
+                    <div class="aw-mod aw-replay-box">
+                        <textarea id="content" class="form-control" placeholder="请输入评论" rows="3"></textarea>
+                        <button id="comment" class="btn btn-default" style="padding-top: 1em;">提交评论</button>
+                    </div>
+                    {/if}
+                </div>
+                <!-- 侧边栏 -->
+                <div class="col-md-3 aw-side-bar hidden-xs hidden-sm">
+                    <!-- 发起人 -->
+                    <div class="aw-mod">
+                        <div class="mod-head">
+                            <h3>编辑</h3>
+                        </div>
+                        <div class="mod-body">
+                            <dl>
+                                <dt class="pull-left aw-border-radius-5">
+                                    <img alt="王赛" src="__STATIC__/static/image/avatar.jpg" />
+                                </dt>
+                                <dd class="pull-left">
+                                    <span class="text-info" >{$post.user.name}</span>
+                                    <i class="icon-v" title="个人认证"></i>
+                                    <p></p>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <!-- end 发起人 -->
+                </div>
+                <!-- end 侧边栏 -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("#comment").on('click',function(event){
+        var content = $("#content").val();
+        $.ajax({
+                type:"POST",
+                url:"{:url('index/comment/comment')}",
+                dataType:'json',
+                xhrFields:{withCredentials:true},
+                data:{'content':content,'type':2,ref_id:{$post.id}},
+            success:function(msg){
+            if(msg.code){
+                var div = "<div class='row comment' data-id="+msg.id+"><div class='col-lg-10'><div class='media'><div class='media-left media-middle col-lg-2'>" +
+                    "<div class='center-block'><span class='label label-info'>"+msg.data.username+"</span></div>" +
+                    "</div><div class='media-body col-lg-offset-2'>"+msg.data.content+"<br><div class='pull-right'>" +
+                    "<span>"+msg.data.at+"</span></div></div></div></div></div><hr>";
+                $("#line").after(div);
+                var num = $("#comments_count").attr("data-num");
+                var num = parseInt(num)
+                num = num+1;
+                $("#comments_count").attr("data-num",num);
+                $("#comments_count").text(num.toString()+" 个回复")
+                $("#content").val('');
+            }else{
+                alert(msg.msg);
+            }
+        }
+    });
+    });
+
+    $("#collect").click(function (event) {
+        var id={$post.id};
+        var status = $(this).attr('data-status');
+        if(status =='0'){
+            $.ajax({
+                url:"{:url('index/post/collect')}",
+                type:"post",
+                dataType:'json',
+                data:{id:id},
+                xhrFields:{withCredentials:true},
+                success:function(msg){
+                    alert(msg.msg);
+                    if(msg.code){
+                        $("#btn-text").text("取消收藏");
+                        $("#collect").attr('data-status',1);
+                    }else {
+                        $("#btn-text").text("收藏");
+                    }
+                }
+            })
+        }else {
+            $.ajax({
+                url:"{:url('index/post/dis_collect')}",
+                type:"post",
+                dataType:'json',
+                data:{id:id},
+                xhrFields:{withCredentials:true},
+                success:function(msg){
+                    alert(msg.msg);
+                    if(msg.code){
+                        $("#btn-text").text("收藏");
+                        $("#collect").attr('data-status',0);
+                    }else {
+                        $("#btn-text").text("取消收藏");
+                    }
+                }
+            })
+        }
+    })
+    $(".del-comment").click(function (event) {
+        var id = $(this).attr("id");
+
+        $.ajax({
+            url:"{:url('index/comment/delete')}",
+            type:"post",
+            dataType:'json',
+            data:{id:id},
+            xhrFields:{withCredentials:true},
+            success:function(msg){
+                alert(msg.msg);
+                if(msg.code){
+                    var num = $("#comments_count").attr("data-num");
+                    var num = parseInt(num)
+                    num = num-1;
+                    $("#comments_count").attr("data-num",num);
+                    $("#comments_count").text(num.toString()+" 个回复")
+                    $(".comment[data-id="+id+"]").hide();
+                }
+            }
+        })
+    })
+</script>
+
+<div class="aw-footer-wrap">
+    <div class="aw-footer">
+        Copyright © 2018<span class="hidden-xs"> - 京ICP备11008151号, All Rights Reserved</span>
+
+        <span class="hide">Powered By <a href="http://www.wecenter.com/?copyright" target="blank">WeCenter 3.0 Beta 2</a></span>
+
+    </div>
+</div>
+</body>
+</html>

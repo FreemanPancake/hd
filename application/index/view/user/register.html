@@ -1,0 +1,32 @@
+{extend name='base1'/}
+{block name='content'/}
+<div id="wrapper">
+    <div class="aw-login-box">
+        <div class="mod-body clearfix">
+            <div class="content pull-left">
+                <h2>侃球吧--用户注册</h2>
+                <form method="post" action="{:url('index/user/doRegister')}">
+                    <input type="hidden" name="return_url" value="{$return_url}" />
+                    <ul class="list-unstyled">
+                        <li>
+                            <input type="text"  class="form-control" placeholder="用户名" name="user" />
+                        </li>
+                        <li>
+                            <input type="text"  class="form-control" placeholder="邮箱" name="email" />
+                        </li>
+                        <li>
+                            <input type="password"  class="form-control" placeholder="密码" name="password" />
+                        </li>
+                        <li>
+                            <input type="password" class="form-control" placeholder="密码" name="repassword" />
+                        </li>
+                        <li class="last">
+                            <button type="submit" class="pull-right btn btn-large btn-primary">注册</button>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}

@@ -1,0 +1,54 @@
+{extend name='base1'/}
+{block name='content'/}
+<div class="row">
+    <div class="col-lg-8 col-lg-offset-2 page-header">
+        <h3>发布新闻</h3>
+    </div>
+    <div class="col-lg-8 col-lg-offset-2">
+        <form class="form-horizontal" action="{:url('index/post/doPost')}" method="post">
+            <div class="form-group">
+                {if $post}
+                <input type="hidden" name="id" value="{$post.id}">
+                {/if}
+            </div>
+            <div class="form-group">
+                <label for="title">主题</label>
+                <input class="form-control" type="text" id="title" name="title" {if $post} value="{$post.title}" {/if}>
+            </div>
+            <div class="form-group">
+                <label for="cat">分类选择</label>
+                <select id="cat" name="category"  class="form-control">
+                    {volist name='cats' id='cat'}
+                    <option value="{$cat.id}"  {if $post} {if $post.category==$cat.id} selected="selected" {/if} {/if}>{$cat.name}</option>
+                    {/volist}
+                </select>
+            </div>
+            <div>
+                <script id="container" name="content" type="text/plain" style="height: 400px;padding: 0px;">
+                </script>
+                <!-- 配置文件 -->
+                <script type="text/javascript" src="/static/js/ueditor.config.js"></script>
+                <!-- 编辑器源码文件 -->
+                <script type="text/javascript" src="/static/js/ueditor.all.js"></script>
+                <!-- 实例化编辑器 -->
+                <script type="text/javascript">
+                    var ue = UE.getEditor('container');
+                    {if $post}
+                    ue.ready(function () {
+                        ue.setContent('{$post.content}');
+                    });
+                    {/if}
+                    $("#sub-btn").onsubmit(function (event) {
+
+                        $("input:hidden")[0].val(ue.getContent())
+                    })
+                </script>
+            </div>
+            <div>
+                <button id="sub-btn" class="btn btn-default">发表</button>
+            </div>
+        </form>
+    </div>
+
+</div>
+{/block}

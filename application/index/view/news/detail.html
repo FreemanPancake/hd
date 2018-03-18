@@ -1,0 +1,107 @@
+{extend name='base1'/}
+{block name='content'/}
+
+<section class="content-wrap">
+    <div class="container">
+        <div class="row">
+
+            <main class="col-md-8 col-md-offset-2 main-content">
+
+
+                <article id="110" class="post">
+
+                    <header class="post-head">
+                        <h1 class="post-title">{$news.title}</h1>
+                        <section class="post-meta">
+                            <span class="author">主编：<a>{$news.user.name}</a></span> &bull;
+                            <time class="post-date">{:date('Y-m-d H:i:s',$news.post_at)}</time>
+                            <button class="btn" aria-label="Left Align" id="collect" data-status="{$news.is_collected}">
+                                <span class="glyphicon glyphicon-align-left" aria-hidden="true"><a id="btn-text">{if $news.is_collected}取消收藏{else/}收藏</a>{/if}</span>
+                            </button>
+                        </section>
+                    </header>
+
+                    <section class="post-content">
+                        {if $news.type==1}
+                        {$news.content}
+                        {else/}
+                        <div class="col-sm-offset-2">
+                            <video poster="/static/image/{$news.face}" hight="600" width="480" controls>
+                                <source src="/static/image/{$news.video}" type="video/mp4">
+                            </video>
+                        </div>
+                        {/if}
+                    </section>
+                </article>
+
+            </main>
+        </div>
+    </div>
+
+</section>
+
+<footer class="main-footer">
+
+<div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <span>Copyright &copy; <a href="">侃球吧</a></span> |
+            </div>
+        </div>
+    </div>
+</div>
+
+<a href="#" id="back-to-top"><i class="fa fa-angle-up"></i></a>
+</footer>
+{block name='js'}
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/jquery.fitvids.min.js"></script>
+<script src="/static/js/highlight.min.js"></script>
+<script src="/static/js/jquery.magnific-popup.min.js"></script>
+<script src="/static/js/main.js?v=77522159b3"></script>
+
+<script>
+    $("#collect").click(function (event) {
+        var id={$news.id};
+        var status = $(this).attr('data-status');
+        if(status =='0'){
+            $.ajax({
+                url:"{:url('index/news/collect')}",
+                type:"post",
+                    dataType:'json',
+                data:{id:id},
+            xhrFields:{withCredentials:true},
+            success:function(msg){
+                    alert(msg.msg);
+                if(msg.code){
+                    $("#btn-text").text("取消收藏");
+                    $("#collect").attr('data-status',1);
+                }else {
+                    $("#btn-text").text("收藏");
+                }
+            }
+            })
+        }else {
+            $.ajax({
+                url:"{:url('index/news/dis_collect')}",
+            type:"post",
+                dataType:'json',
+                data:{id:id},
+            xhrFields:{withCredentials:true},
+            success:function(msg){
+                alert(msg.msg);
+                if(msg.code){
+                    $("#btn-text").text("收藏");
+                    $("#collect").attr('data-status',0);
+                }else {
+                    $("#btn-text").text("取消收藏");
+                }
+            }
+        })
+        }
+    })
+</script>
+{/block}
+{/block}

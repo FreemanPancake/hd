@@ -1,0 +1,33 @@
+{extend name='base'/}
+{block name='content'/}
+<div class="container">
+    <div class="row" >
+        <table class="table table-responsive">
+            <thead>
+            <th>编号</th>
+            <th>用户名</th>
+            <th>角色</th>
+            <th>email</th>
+            <th>注册时间</th>
+            <th>状态</th>
+            <th>操作</th>
+            </thead>
+            {if $users}
+            <tbody>
+                {volist name='users' id='user'}
+                <tr>
+                    <td>{$user.id}</td>
+                    <td>{$user.name}</td>
+                    <td>{$user.roleName}</td>
+                    <td>{$user.email}</td>
+                    <td>{:date('Y-m-d H:i:s',$user.register_at)}</td>
+                    <td>{$user.statusName}</td>
+                    <td>{if $user.status}<a class="btn btn-default" href="{:url('admin/user/disable')}?id={$user.id}">禁用</a>{else/}<a class="btn btn-default" href="{:url('admin/user/enable')}?id={$user.id}">启用</a>{/if} </td>
+                </tr>
+            {/volist}
+            </tbody>
+            {/if}
+        </table>
+    </div>
+</div>
+{/block}

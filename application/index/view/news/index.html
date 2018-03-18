@@ -1,0 +1,40 @@
+{extend name='base1'/}
+{block name='content'/}
+<section class="content-wrap">
+    <div class="container">
+        <div class="row">
+            <main class="col-md-8 col-md-offset-2 main-content">
+                {volist name='newses' id='news'}
+                <article id=110 class="post">
+                    <div class="post-head">
+                        <h4 class="">
+                            <a href="{:url('index/news/detail')}?id={$news.id}">{$news.title}</a>
+                        </h4>
+                        <div class="post-meta">
+                            <span class="label label-success">{$news.typeName}</span>
+                            <span class="author">主编：
+                                <span class="label label-info">{$news.user.name}</span>
+                            </span> &bull;
+                            <time >{:date('Y-m-d H:i:s',$news.post_at)}</time>
+                        </div>
+                    </div>
+                    {if $Think.session.role==2 && $Think.session.user_id == $news.user_id}
+                    <div class="post-footer">
+                        <span><a {if $news.type==1} href="{:url('index/news/news')}?id={$news.id}" {else/} href="{:url('index/news/upload')}?id={$news.id}" {/if}>修改</a></span>
+                        <span><a href="{:url('index/news/delete')}?id={$news.id}">删除</a></span>
+                    </div>
+                    {/if}
+                </article>
+                {/volist}
+                <nav class="pagination" role="navigation">
+                    {if $newses}
+                    {$newses->render()}
+                    {/if}
+                </nav>
+            </main>
+
+            </aside>
+        </div>
+    </div>
+</section>
+{/block}

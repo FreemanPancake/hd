@@ -1,0 +1,75 @@
+{extend name='base1'/}
+{block name='content'/}
+<div id="wrapper">
+    <div class="row">
+    <div class="col-md-6 col-md-offset-2">
+        <p><span class="text-primary">用户名：</span>{$user.name}</p>
+        <p><span class="text-primary">邮箱：</span><input type="text" class="disabled" value="{$user.email}" id="email"/><span><button id="email-btn">点击修改</button></span></p>
+        <p><span class="text-primary">角色：</span>{$user.roleName}</p>
+        <p><span class="text-primary"><button class="btn btn-default" id="change_pass">点击修改密码</button></span></p>
+        <form class="form-horizontal" id="pass_form" style="display: none">
+            <div class="form-group">
+                <label for="old">原密码</label>
+                <input class="form-control" name="old" id="old" type="password">
+            </div>
+            <div class="form-group">
+                <label for="new">新密码</label>
+                <input class="form-control" name="new" id="new" type="password">
+            </div>
+            <div class="form-group">
+                <label for="re">重复新密码</label>
+                <input class="form-control" name="new" id="re" type="password">
+            </div>
+            <button id="do" class="btn btn-default">修改</button>
+        </form>
+    </div>
+    </div>
+</div>
+<script>
+    $("#change_pass").click(function () {
+        $("#pass_form").toggle();
+    })
+    $("#do").bind('click',function (event) {
+        var data = {
+            old:$("#old").val(),
+            new:$("#new").val(),
+            re:$("#re").val()
+        };
+        $.ajax({
+        url:"{:url('index/user/updatePass')}",
+        type:"post",
+            data:data,
+            dataType:'json',
+            xhrFields:{withCredentials:true},
+            success:function(msg){
+            if(msg.code){
+                alert(msg.msg);
+                $("#pass_form").hide();
+            }else{
+                alert(msg.msg);
+            }
+        }
+        })
+    })
+    $("#email").bind('click',function (event) {
+        $(this).removeClass('disabled');
+    });
+    $("#email-btn").click(function (event) {
+        $.ajax({
+            url:"{:url('index/user/updateEmail')}",
+        type:"post",
+            data:{email:$("#email").val()},
+            dataType:'json',
+            xhrFields:{withCredentials:true},
+            success:function(msg){
+            if(msg.code){
+                alert(msg.msg);
+                $("#email").addClass('disabled');
+            }else{
+                alert(msg.msg);
+            }
+        }
+        })
+    })
+</script>
+{/block}

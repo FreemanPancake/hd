@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
+    <meta name="renderer" content="webkit"/>
+    <title>Join Now</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/static/css/bootstrap.css"/>
+</head>
+<body>
+<div class="aw-top-menu-wrap">
+    <div class="container">
+        <div class="aw-top-nav navbar">
+            <div class="navbar-header">
+                <button  class="navbar-toggle pull-left">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <nav role="navigation" class="collapse navbar-collapse bs-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="{:url('index/post/index')}" class=""><i class="icon icon-ul"></i> 侃球吧---球迷论坛</a></li>
+                    <li><a href="{:url('index/index/index')}" ><i class="icon"></i> 侃球吧首页</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="aw-user-nav">
+            {if !$Think.session.user_id}
+            <span>
+						<a class="register btn btn-normal btn-success" href="{:url('index/user/login')}">登录</a>
+						<a class="login btn btn-normal btn-primary" href="{:url('index/user/register')}">注册</a>
+					</span>
+            {else/}
+            <li role="presentation" class="nav navbar-nav navbar-right" style="padding-top: 0.35em;">
+                <div class="glyphicon glyphicon-user text-success">&nbsp;{$Think.session.user_name}&nbsp;<span><a href="{:url('index/user/logout')}">退出</a></span></div></li>            {/if}
+        </div>
+
+    </div>
+</div>
+
+<div class="aw-container-wrap">
+
+    <div class="container">
+        <div class="row">
+            <div class="aw-content-wrap clearfix">
+                <div class="col-sm-12 col-md-9 aw-main-content">
+
+                    <div class="aw-mod aw-explore-list">
+                        <div class="mod-body">
+                            <div class="aw-common-list">
+                                {volist name='posts' id='post'}
+                                <div class="aw-item active" data-topic-id="">
+                                    <a class="aw-user-name hidden-xs" data-id="384"
+                                       href="#" rel="nofollow"><img
+                                            src="__STATIC__/static/image/default-avatar.png" alt=""/></a>
+                                    <div class="aw-question-content">
+                                        <h4>
+                                            <a href="{:url('index/post/detail')}?id={$post.id}">{$post.title}</a>
+                                        </h4>
+                                        <p>
+                                            <span class="aw-question-tags"
+                                               >{$post.category.name}</span>
+                                            • <span  class="aw-user-name">{$post.user.name}</span>
+                                            <span class="text-color-999">发布了帖子 • {$post.collect_count} 人关注 • {$post.comments_count} 个回复 • {$post.click} 次浏览 • {:date('Y-m-d H:i:s',$post.post_at)}
+				</span>
+                                        </p>
+                                    </div>
+                                </div>
+                                {/volist}
+                            </div>
+                        </div>
+                        <div class="mod-footer">
+                            <div class="page-control">
+                                {if $posts}
+                                {$posts->render()}
+                                {/if}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="aw-footer-wrap">
+    <div class="aw-footer">
+        Copyright © 2018<span class="hidden-xs"> 侃球吧, All Rights Reserved</span>
+    </div>
+</div>
+
+
+<a class="aw-back-top hidden-xs" href="javascript:;" onclick="$.scrollTo(1, 600, {queue:true});"><i
+        class="icon icon-up"></i></a>
+
+</body>
+</html>

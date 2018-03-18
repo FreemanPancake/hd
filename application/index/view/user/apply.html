@@ -1,0 +1,29 @@
+{extend name='base1'/}
+{block name='content'/}
+<div id="wrapper">
+    <div class="aw-login-box">
+        <div class="mod-body ">
+            <div >
+                <h2>侃球吧--申请主编</h2>
+                <form id="login_form" method="post"
+                      action="{:url('index/user/doApply')}">
+                    <input type="hidden" name="return_url" value="{$Request.header.referer}"/>
+                    <ul class="list-unstyled">
+
+                          <textarea name="reason" rows="4" class="form-control" placeholder="请填写申请理由"></textarea>
+
+                        <li class="alert alert-danger hide error_message">
+                            <i class="icon icon-delete"></i>
+                            <em></em>
+                            {$Think.session.error}
+                        </li>
+                        <li class="last">
+                            <button type="submit" class="pull-right btn btn-large btn-primary" style="padding-top: 1em;">提交申请</button>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}

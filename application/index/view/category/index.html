@@ -1,0 +1,59 @@
+{extend name='base1'/}
+{block name='content'/}
+<section class="content-wrap">
+    <div class="container">
+        <div class="row">
+            <div class="page-header">
+                分类管理
+            </div>
+            <div >
+                <form>
+                    <input type="text" name="name" id="cat">
+                    <button id="add">添加分类</button>
+                </form>
+            </div>
+            <table class="table table-responsive">
+                <thead>
+                <th>编号</th>
+                <th>分类名称</th>
+                <th>操作</th>
+                </thead>
+                <tbody>
+                    {volist name='cats' id='cat'}
+                        <tr>
+                            <td>{$cat.id}</td>
+                            <td>{$cat.name}</td>
+                            <td><a href="{:url('index/category/delete')}?id={$cat.id}">删除</a></td>
+                        </tr>
+                    {/volist}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<br>
+<script>
+    $("#add").click(function (event) {
+        var cat = $("#cat").val();
+        $.ajax({
+            url:"{:url('index/category/add')}",
+            data:{name:cat},
+            dataType:'json',
+            type:'post',
+            success:function (msg) {
+                if(msg.code){
+                    var div="                        <tr>\n" +
+                        "                            <td>"+msg.data.id+"</td>\n" +
+                        "                            <td>\"+msg.data.name+\"</td>\n" +
+                        "                            <td><a href=\"{:url('index/category/delete')}?id=\"+msg.data.id+\"\">删除</a></td>\n" +
+                        "                        </tr>";
+                    $("tbody").appendChild(div);
+                    $("#add").val('');
+                }else {
+                    alert(msg.msg);
+                }
+            }
+        })
+    })
+</script>
+{/block}
