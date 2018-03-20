@@ -15,72 +15,67 @@ class Act extends MyController
 //        'loginCheck'=>['only'=>'post,doPost']
     ];
 
-    protected $Model;
-
-    public function __construct(Request $request = null)
-    {
-        $this->Model = new \app\model\Activity();
-        parent::__construct($request);
-    }
-
     public function act()
     {
         $cats = \app\model\Category::all();
         $act = null;
-        if($id = $this->request->param('id'));
+        if($id = $this->request->param('id'))
         $act = \app\model\Activity::get($id);
-        return $this->fetch('post',['cats'=>$cats,'cat'=>$act]);
+        return $this->fetch('act',['cats'=>$cats,'act'=>$act]);
     }
 
-    public function doPost()
+    public function save()
     {
         if($nid = $this->request->param('id')){
             $Act  = \app\model\Activity::get($nid);
         }else{
             $Act  = new \app\model\Activity();
         }
-        $title = $this->request->post('title');
         $name = $this->request->post('name');
         $desc = $this->request->post('desc');
-        $category = $this->request->post('category');
-        $members_limit = $this->request->post('members_limit');
-        $act_at = $this->request->post('act_at');
+        $category_id = $this->request->post('category');
+        $location = $this->request->post('location');
+        $face = $this->saveFile('face');
+        $members_limit = $this->request->post('num');
+        $txt = $this->request->post('txt');
+        $act_at_date = $this->request->post('act_at_date');
+        $act_at_time = $this->request->post('act_at_time');
+        $act_at = strtotime($act_at_date." ".$act_at_time);
         $create_at = time();
-        $click = 0;
+        $clicks = 0;
         $status = 1;
 //        $user_id = Session::get('user_id')?:1;
         $user_id = 1;
         $comments_count = 0;
         $is_good = 0;
-        foreach (['name','title','desc','category','act_at','click','user_id','members_limit','face','comments_count'] as $item){
+        foreach (['name','desc','category_id','act_at','clicks','user_id','members_limit','face','comments_count','txt','location'] as $item){
             $Act->$item = $$item;
         }
         if($id = $Act->save()) {
             $this->redirect('index/act/detail',"id={$Act->id}");
         }else{
-            $this->error("发表文章失败，请稍后重试",url('index/post/post'));
+            $this->error("发布失败，请稍后重试",url('index/act/act'));
         }
     }
 
     public function detail()
     {
         $id = $this->request->param('id');
-        $post = $this->Model->getById($id);
-        $post->click = intval($post->click)+1;
+        $post = \app\model\Activity::get($id);
+        $post->clicks = intval($post->clicks)+1;
         $post->save();
 
-        if($user_id = Session::get('user_id')){
-            if($collect = Collect::get(['type'=>2,'ref_id'=>$post->id,'user_id'=>$user_id])){
-                $post->is_collected = 1;
-            }else{
-                $post->is_collected = 0;
-            }
-        }else{
-            $post->is_collected = 0;
-        }
+        $post->is_collected = 0;
+        // if($user_id = Session::get('user_id')){
+        //     if($collect = Collect::get(['ref_id'=>$post->id,'user_id'=>$user_id])){
+        //         $post->is_collected = 1;
+        //     }
+        // }
+        $MemberModel = new  \app\model\Member();
+        $post->members = $MemberModel->where('activity_id',$id)->count();
 
-        $comments = \app\model\Comment::where(['type'=>2,'ref_id'=>$id])->order(['at desc'])->paginate(10);
-        return $this->fetch('detail',['post'=>$post,'comments'=>$comments]);
+        $comments = \app\model\Comment::where(['activity_id'=>$id])->order(['at desc'])->paginate(10);
+        return $this->fetch('detail',['act'=>$post,'comments'=>$comments]);
     }
 
     public function collect()

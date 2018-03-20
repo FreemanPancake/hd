@@ -82,3 +82,22 @@ body{
     font-size: 14px;
     color:#aaaaaa;
 }
+.act-form{
+   margin-top:18px;
+}
+.act-detail{
+    padding-top: 1em;
+    padding-left:1em;
+    font-size:2em;
+    background:#FFFFFF;
+    border: 1px solid #B8B8B8;
+    border-radius: 8px;
+    /* height:800px; */
+}
+.act-detail .meta{
+    font-size: 12px;
+    margin-top:12px;
+}
+.act-detail .content{
+    margin-right:20px;
+}

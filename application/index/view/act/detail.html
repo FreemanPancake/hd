@@ -1,0 +1,29 @@
+{extend name='base'/} 
+{block name='content'/}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="head">
+            <span>活动详情</span>
+        </div>
+        <div class="act-detail">
+            <div class="act-name">
+                <span>{$act.name}</span>
+            </div>
+            <div class="meta">
+                <p><strong>开始时间：</strong>{:date('Y-m-d H:i',$act->act_at)}</p>
+                <p><strong>地点：</strong>{$act.location}</p>
+                <p><strong>人数限制：</strong>{$act.members_limit}人</p>
+                <p><strong>已报名人数：</strong>{$act.members|0}人</p>
+            </div>
+            <div class="content">
+                {$act.desc}
+            </div>
+        </div>
+    </div>
+    <div class="comments">
+        <div class="comment-item">
+            
+        </div>
+    </div>
+</div>
+{/block}
