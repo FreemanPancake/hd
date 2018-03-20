@@ -15,6 +15,7 @@ body{
     border: 1px solid #B8B8B8;
     border-radius: 8px;
     height:500px;
+    margin-bottom: 20px;
 }
 .act-name{
     font-size:18px;
@@ -100,4 +101,36 @@ body{
 }
 .act-detail .content{
     margin-right:20px;
+    font-size: 16px;
+}
+.act-detail img{
+    width: 1060px;
+}
+.actions span{
+    margin-top:20px;
+    margin-left: 20px;
+}
+.comment-item{
+    display: flex;
+    padding-right: 20px;
+    margin: 20px;
+}
+.author{
+    margin-left: 20px;
+    color:#69C2D4;
+}
+.comment{
+    margin-left: 20px;
+    width: 70%;
+}
+.time{
+    color: darkgrey;
+    padding-right: 10px;
+}
+#comment{
+    margin-left: 20px;
+    width: 100%;
+}
+#comment-btn{
+    margin-left: 20px;
 }

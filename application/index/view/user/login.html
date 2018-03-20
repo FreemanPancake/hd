@@ -1,41 +1,38 @@
-{extend name='base1'/}
+{extend name='base'/}
 {block name='content'/}
-<div id="wrapper">
-    <div class="aw-login-box">
-        <div class="mod-body clearfix">
-            <div class="content pull-left">
-                <h1 class="logo">
-                    <a href=""></a>
-                </h1>
-                <h2>侃球吧---登录</h2>
-                <form id="login_form" method="post"
-                      action="{:url('index/user/doLogin')}">
-                    <input type="hidden" name="return_url" value="{$Request.header.referer}"/>
-                    <ul class="list-unstyled">
-                        <li>
-                            <input type="text" id="aw-login-user-name" class="form-control" placeholder="用户名"
-                                   name="user"/>
-                        </li>
-                        <li>
-                            <input type="password" id="aw-login-user-password" class="form-control" placeholder="密码"
-                                   name="password"/>
-                        </li>
-                        <li class="alert alert-danger hide error_message">
-                            <i class="icon icon-delete"></i>
-                            <em></em>
-                            {$Think.session.error}
-                        </li>
-                        <li class="last">
-                            <button type="submit" class="pull-right btn btn-large btn-primary">登录</button>
-                        </li>
-                    </ul>
-                </form>
-            </div>
-        </div>
-        <div class="mod-footer">
-            <span>还没有账号?</span>&nbsp;&nbsp;
-            <a href="{:url('index/user/register')}">立即注册</a>&nbsp;&nbsp;•&nbsp;&nbsp;
-        </div>
-    </div>
+<div class="row">
+
+    <h1 class="logo">
+        <a href=""></a>
+    </h1>
+    <h2>登录</h2>
+    <form method="post"
+          action="{:url('index/user/doLogin')}">
+        <input  type="hidden" name="return_url" value="{$Request.header.referer}"/>
+        <ul class="list-unstyled">
+            <li>
+                <input class="form-control" style="margin-top:20px;" type="text" id="aw-login-user-name" class="form-control" placeholder="用户名"
+                       name="user"/>
+            </li>
+            <li>
+                <input class="form-control" style="margin-top:20px;" type="password" id="aw-login-user-password" class="form-control" placeholder="密码"
+                       name="password"/>
+            </li>
+            <li class="alert alert-danger hide error_message">
+                <i class="icon icon-delete"></i>
+                <em></em>
+                {$Think.session.error}
+            </li>
+            <li class="last">
+                <button type="submit" class="pull-right btn btn-large btn-primary">登录</button>
+            </li>
+        </ul>
+    </form>
+</div>
+
+<div class="mod-footer">
+    <span>还没有账号?</span>&nbsp;&nbsp;
+    <a href="{:url('index/user/register')}">立即注册</a>
+
 </div>
 {/block}

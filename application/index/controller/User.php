@@ -47,10 +47,9 @@ class User extends MyController
         if($User = $Model->getByUserAndPass($user,md5($pass))){
             Session::set('user_id',$User->id);
             Session::set('user_name',$User->name);
-            if($User->role == 2 && $User->role_status)
-                Session::set('role',2);
-            else
-                Session::set('role',3);
+
+            Session::set('role',2);
+
             $this->success("登录成功",'index/index/index',null,2);
         }else{
             $this->error("用户名或密码错误",url('index/user/login'));

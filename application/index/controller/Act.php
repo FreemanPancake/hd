@@ -88,7 +88,6 @@ class Act extends MyController
         }
         $Collect = new Collect();
         $Collect->user_id = $user_id;
-        $Collect->type=2;
         $Collect->ref_id = $id;
         if($Collect->save()){
             echo json_encode(['code'=>1,'msg'=>"收藏成功"]);

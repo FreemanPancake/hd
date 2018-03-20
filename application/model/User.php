@@ -7,7 +7,7 @@ class User extends model
 {
     static $roles =[
         1=>"管理员",
-        2=>"主编",
+        2=>"认证用户",
         3=>"普通用户",
     ];
 

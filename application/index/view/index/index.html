@@ -6,12 +6,13 @@
         </div>
         <div class="ac-list">
             <hr>
+            {volist name='acts' id='act'}
             <div class="act-item">
                 <div class="row">
                     <div class="col-md-9">
                         <div class="act-header">
                             <span class="act-cat">精选优惠</span>
-                            <span class="act-name">魅族应用商店抽5元话费活动 限魅族手机参与！魅族应用商店抽5元话费活动 限魅族手机参与</span>
+                            <span class="act-name"><a href="{:url('index/act/detail')}?id={$act.id}">魅族应用商店抽5元话费活动 限魅族手机参与！魅族应用商店抽5元话费活动 限魅族手机参与</a></span>
 
                         </div>
                         <div class="img-frame">
@@ -44,6 +45,8 @@
                         </div>
                     </div>
                 </div>
+                <hr>
+                {/volist}
             </div>
         </div>
     </div>

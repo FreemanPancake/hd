@@ -26,17 +26,18 @@ CREATE TABLE `activity` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) DEFAULT '',
   `face` varchar(128) DEFAULT '',
-  `title` varchar(64) DEFAULT '',
   `act_at` int(11) DEFAULT '0',
-  `desc` int(11) DEFAULT NULL,
+  `desc` text,
   `create_at` int(11) DEFAULT '0',
   `user_id` int(11) DEFAULT NULL,
   `members_limit` int(11) DEFAULT '0',
-  `cat_id` int(11) DEFAULT NULL,
   `comments_count` int(11) DEFAULT NULL,
   `clicks` int(11) DEFAULT '0',
+  `category_id` int(11) DEFAULT NULL,
+  `txt` text,
+  `location` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,6 +46,7 @@ CREATE TABLE `activity` (
 
 LOCK TABLES `activity` WRITE;
 /*!40000 ALTER TABLE `activity` DISABLE KEYS */;
+INSERT INTO `activity` VALUES (6,'黄教主宝刀不老 18年手机市场不缺席魅族',NULL,1521691200,'<p style=\"margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; color: rgb(51, 51, 51); word-break: break-all; word-wrap: break-word; line-height: 2; font-size: 11pt; white-space: normal; background-color: rgb(255, 255, 255); font-family: 宋体; text-indent: 2em; text-align: justify;\">3.15的风潮刚刚吹过，就在一众品牌商侥幸“逃过一劫”的时候，总有一些专注于极致和信仰的品牌甚至不为所动，对这些品牌而言，真正的匠心产品不仅需要经过市场真金烈火的考验，更是来源于自身对产品的强烈自信和未来的战略布局。</p><p style=\"margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; color: rgb(51, 51, 51); word-break: break-all; word-wrap: break-word; line-height: 2; font-size: 11pt; white-space: normal; background-color: rgb(255, 255, 255); font-family: 宋体; text-indent: 2em; text-align: justify;\">3月16日，备受瞩目的魅族再度迎来社会各界的审视——隐匿一年多的魅族掌门人黄章突然在论坛发声，表示“由于时间关系，15只是我多年后回归魅族的小试牛刀，随后推出的16系列才是我全力打造的产品”，一石激起千层浪，这条重磅消息对于翘首以盼的广大魅友门无疑打上了一阵兴奋剂，随后不久J.Wong再次发声“16系列紧跟着8月份左右就能推出”，让原本已经火热的态势彻底沸腾起来，相比较诸多品牌纷纷选择“谨言慎行”，魅族的这一系列举动着实赚足了眼球，也收获了来自社会各层面的强势关注。</p><p><img src=\"/ueditor/php/upload/image/20180320/1521556285595700.jpg\" title=\"1521556285595700.jpg\" alt=\"sample.jpg\"/></p>',0,1,60,10,18,1,'','黄教主宝刀不老 18年手机市场不缺席魅族'),(8,'魅族应用商店抽500元话费活动 限魅族手机参与！','20180320/bab721924e96f48f1c67a72bf2b60e9f.jpg',1521777600,'<p><span style=\"color: rgb(226, 40, 65); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(255, 255, 255);\">魅族官网提供魅族 PRO 系列、MX 系列、魅族配件系列产品的预约和购买。提供最新魅族产品资讯、完善的售后服务、社区在线交流、手机固件/应用下载。</span></p><p><span style=\"color: rgb(226, 40, 65); font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 14px; background-color: rgb(255, 255, 255);\"><img src=\"/ueditor/php/upload/image/20180320/1521551538409807.jpg\" title=\"1521551538409807.jpg\" alt=\"sample.jpg\"/></span></p><p>各种惊喜优惠多多</p>',0,1,30,0,49,2,'','万达广场A401'),(9,'黄教主宝刀不老 18年手机市场不缺席魅族',NULL,1521691200,'<p style=\"margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; color: rgb(51, 51, 51); word-break: break-all; word-wrap: break-word; line-height: 2; font-size: 11pt; white-space: normal; background-color: rgb(255, 255, 255); font-family: 宋体; text-indent: 2em; text-align: justify;\">3.15的风潮刚刚吹过，就在一众品牌商侥幸“逃过一劫”的时候，总有一些专注于极致和信仰的品牌甚至不为所动，对这些品牌而言，真正的匠心产品不仅需要经过市场真金烈火的考验，更是来源于自身对产品的强烈自信和未来的战略布局。</p><p style=\"margin-top: 0px; margin-bottom: 0px; padding: 5px 0px; color: rgb(51, 51, 51); word-break: break-all; word-wrap: break-word; line-height: 2; font-size: 11pt; white-space: normal; background-color: rgb(255, 255, 255); font-family: 宋体; text-indent: 2em; text-align: justify;\">3月16日，备受瞩目的魅族再度迎来社会各界的审视——隐匿一年多的魅族掌门人黄章突然在论坛发声，表示“由于时间关系，15只是我多年后回归魅族的小试牛刀，随后推出的16系列才是我全力打造的产品”，一石激起千层浪，这条重磅消息对于翘首以盼的广大魅友门无疑打上了一阵兴奋剂，随后不久J.Wong再次发声“16系列紧跟着8月份左右就能推出”，让原本已经火热的态势彻底沸腾起来，相比较诸多品牌纷纷选择“谨言慎行”，魅族的这一系列举动着实赚足了眼球，也收获了来自社会各层面的强势关注。</p><p><img src=\"/ueditor/php/upload/image/20180320/1521556117327167.png\" title=\"1521556117327167.png\" alt=\"sample.png\"/></p>',0,1,60,0,2,1,'','黄教主宝刀不老 18年手机市场不缺席魅族');
 /*!40000 ALTER TABLE `activity` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -58,7 +60,6 @@ DROP TABLE IF EXISTS `category`;
 CREATE TABLE `category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) DEFAULT NULL,
-  `desc` varchar(255) DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -69,7 +70,7 @@ CREATE TABLE `category` (
 
 LOCK TABLES `category` WRITE;
 /*!40000 ALTER TABLE `category` DISABLE KEYS */;
-INSERT INTO `category` VALUES (1,'足球新闻','五大联赛最新资讯'),(2,'篮球新闻','国际国内篮球赛事'),(3,'国际足球','');
+INSERT INTO `category` VALUES (1,'经验分享'),(2,'优惠资讯');
 /*!40000 ALTER TABLE `category` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,7 +84,6 @@ DROP TABLE IF EXISTS `collect`;
 CREATE TABLE `collect` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) DEFAULT NULL,
-  `type` tinyint(4) DEFAULT '1' COMMENT '1新闻 2帖子',
   `ref_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
@@ -95,7 +95,7 @@ CREATE TABLE `collect` (
 
 LOCK TABLES `collect` WRITE;
 /*!40000 ALTER TABLE `collect` DISABLE KEYS */;
-INSERT INTO `collect` VALUES (6,2,1,1),(11,2,2,1),(15,1,1,2),(17,1,1,12),(19,1,1,1),(20,1,1,1);
+INSERT INTO `collect` VALUES (6,2,1),(11,2,1),(15,1,2),(17,1,12),(19,1,1),(20,1,1);
 /*!40000 ALTER TABLE `collect` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -113,7 +113,7 @@ CREATE TABLE `comment` (
   `user_id` int(11) DEFAULT '0',
   `activity_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,8 +122,32 @@ CREATE TABLE `comment` (
 
 LOCK TABLES `comment` WRITE;
 /*!40000 ALTER TABLE `comment` DISABLE KEYS */;
-INSERT INTO `comment` VALUES (6,1521347614,'切尔西比必胜',1,1),(7,1521347657,'切尔西比必胜 切尔西比必胜 切尔西比必胜 切尔西比必胜 ',1,1),(8,1521347659,'切尔西比必胜 切尔西比必胜 ',1,1),(9,1521347978,'回合分别于',1,2),(11,1521349025,'回合分别于 ',1,2),(13,1521359956,'切尔西比必胜切尔西比必胜',1,1),(14,1521359958,'',1,1);
+INSERT INTO `comment` VALUES (6,1521347614,'切尔西比必胜',1,1),(7,1521347657,'切尔西比必胜 切尔西比必胜 切尔西比必胜 切尔西比必胜 ',1,1),(8,1521347659,'切尔西比必胜 切尔西比必胜 ',1,1),(9,1521347978,'回合分别于',1,2),(11,1521349025,'回合分别于 ',1,2),(13,1521359956,'切尔西比必胜切尔西比必胜',1,1),(14,1521359958,'',1,1),(15,1521556849,'感谢楼主分享',1,6),(16,1521556881,'感谢楼主分享',1,6),(17,1521557014,'感谢楼主分享',1,6),(18,1521557180,'感谢楼主分享感谢楼主分享感谢楼主分享',1,6),(19,1521557187,'感谢楼主分享感谢楼主分享感谢楼主分享',1,6),(20,1521557223,'sdfsdaf',1,6),(21,1521557234,'感谢楼主分享感谢楼主分享感谢楼主分享',1,6),(22,1521557278,'感谢楼主分享感谢楼主分享感谢楼主分享感谢楼主分享感谢楼主分享感谢楼主分享',1,6),(23,1521557296,'楼主分享感谢楼主分享感谢楼主分享感谢楼主分享感',1,6),(24,1521557362,'楼主分享感谢楼主分享感谢楼主分享感谢楼主分享感楼主分享感谢楼主分享感谢楼主分享感谢楼主分享感',1,6);
 /*!40000 ALTER TABLE `comment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `member`
+--
+
+DROP TABLE IF EXISTS `member`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `member` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `activity_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `member`
+--
+
+LOCK TABLES `member` WRITE;
+/*!40000 ALTER TABLE `member` DISABLE KEYS */;
+/*!40000 ALTER TABLE `member` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -235,8 +259,6 @@ CREATE TABLE `user` (
   `email` varchar(255) DEFAULT NULL,
   `register_at` int(11) DEFAULT '0',
   `status` int(11) DEFAULT '1',
-  `role_status` int(11) DEFAULT NULL,
-  `role_reason` varchar(255) DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -247,7 +269,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'足球万事通',2,'e10adc3949ba59abbe56e057f20f883e','wanshitong@qq.com',1501234568,1,1,''),(2,'亨利',3,'e10adc3949ba59abbe56e057f20f883e','henry12@qq.com',1502334123,1,NULL,''),(3,'admin',1,'e10adc3949ba59abbe56e057f20f883e',NULL,0,1,NULL,''),(4,'henry',2,'e10adc3949ba59abbe56e057f20f883e','henry@qq.com',1521357754,1,1,''),(5,'haha',2,'e10adc3949ba59abbe56e057f20f883e','haha@qq.com',1521360065,1,0,'足球爱好者');
+INSERT INTO `user` VALUES (1,'足球万事通',2,'e10adc3949ba59abbe56e057f20f883e','wanshitong@qq.com',1501234568,1),(2,'亨利',3,'e10adc3949ba59abbe56e057f20f883e','henry12@qq.com',1502334123,1),(3,'admin',1,'e10adc3949ba59abbe56e057f20f883e',NULL,0,1),(4,'henry',2,'e10adc3949ba59abbe56e057f20f883e','henry@qq.com',1521357754,1),(5,'haha',2,'e10adc3949ba59abbe56e057f20f883e','haha@qq.com',1521360065,1);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -260,4 +282,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-19 22:49:38
+-- Dump completed on 2018-03-20 22:49:39

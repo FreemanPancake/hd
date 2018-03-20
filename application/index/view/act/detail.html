@@ -20,12 +20,98 @@
             </div>
         </div>
     </div>
-    <div class="comments">
-        <div class="comment-item">
-            <div class="author">
-                <div><img</div>
-            </div>
-        </div>
+    <div class="actions">
+        <span id="signup"  class="btn btn-primary">报名</span>
+        <span id="#collect" class="btn btn-primary" data-status="{$act.is_collected}">{if !$act.is_collected}收藏{else/}取消收藏{/if}</span>
     </div>
+
+    <div class="comments">
+        <hr id="line">
+        {volist name='comments' id='comment'}
+        <div class="comment-item" data-id="{$comment.id}">
+            <div class="author">
+                <span>{$comment.user.name}</span>
+            </div>
+            <div class="comment">{$comment.content}</div>
+            <div class="time">{:date('Y-m-d H:i:s',$comment.at)}</div>
+        </div>
+        {/volist}
+    </div>
+    <hr>
+    {if $Think.session.user_id}
+    <div>
+        <textarea id="comment" rows="3"></textarea>
+        <div id="comment-btn"><span class="btn btn-primary">提交评论</span></div>
+    </div>
+    {/if}
 </div>
+<script>
+
+        $("#comment-btn").on('click',function(event){
+            var content = $("#comment").val();
+            $.ajax({
+                    type:"POST",
+                    url:"{:url('index/comment/comment')}",
+                    dataType:'json',
+                    xhrFields:{withCredentials:true},
+                    data:{'content':content,'type':2,activity_id:{$act.id}},
+                success:function(msg){
+                if(msg.code){
+                    var div = "<div class=\"comment-item\" data-id=\"+msg.data.id+\">\n" +
+                        "            <div class=\"author\">\n" +
+                        "                <span>"+msg.data.username+"</span>\n" +
+                        "            </div>\n" +
+                        "            <div class=\"comment\">"+msg.data.content+"</div>\n" +
+                        "            <div class=\"time\">"+msg.data.time+"</div>\n" +
+                        "        </div>";
+                    $("#line").after(div);
+                    $("#comment").val('');
+                }else{
+                    alert(msg.msg);
+                }
+            }
+        });
+        });
+
+        $("#collect").click(function (event) {
+            var id={$act.id};
+            var status = $(this).attr('data-status');
+            if(status =='0'){
+                $.ajax({
+                    url:"{:url('index/act/collect')}",
+                    type:"post",
+                    dataType:'json',
+                    data:{id:id},
+                    xhrFields:{withCredentials:true},
+                    success:function(msg){
+                        alert(msg.msg);
+                        if(msg.code){
+                            $("#collect").text("取消收藏");
+                            $("#collect").attr('data-status',1);
+                        }else {
+                            $("#collect").text("收藏");
+                        }
+                    }
+                })
+            }else {
+                $.ajax({
+                    url:"{:url('index/act/dis_collect')}",
+                    type:"post",
+                    dataType:'json',
+                    data:{id:id},
+                    xhrFields:{withCredentials:true},
+                    success:function(msg){
+                        alert(msg.msg);
+                        if(msg.code){
+                            $("#collect").text("收藏");
+                            $("#collect").attr('data-status',0);
+                        }else {
+                            $("#collect").text("取消收藏");
+                        }
+                    }
+                })
+            }
+        })
+
+</script>
 {/block}
