@@ -32,6 +32,7 @@ class Act extends MyController
     public function save()
     {
         if($nid = $this->request->param('id')){
+            $clicks = 0;
             $Act  = \app\model\Activity::get($nid);
         }else{
             $Act  = new \app\model\Activity();
@@ -48,14 +49,13 @@ class Act extends MyController
         $act_at_time = $this->request->post('act_at_time');
         $act_at = strtotime($act_at_date." ".$act_at_time);
         $create_at = time();
-        $clicks = 0;
         $status = 1;
-//        $user_id = Session::get('user_id')?:1;
-        $user_id = 1;
+        $user_id = Session::get('user_id')?:1;
         $comments_count = 0;
         $is_good = 0;
-        $arr = ['name','desc','category_id','act_at','clicks','user_id','members_limit','comments_count','txt','location','limit'];
+        $arr = ['name','desc','category_id','act_at','user_id','members_limit','comments_count','txt','location','limit'];
         $face?$arr[]= 'face':null;
+        isset($clicks)?$arr[] = 'clicks':null;
         foreach ($arr as $item){
             $Act->$item = $$item;
         }
@@ -86,10 +86,11 @@ class Act extends MyController
             }
         }
         $MemberModel = new  \app\model\Member();
+        $mems = $MemberModel->where('activity_id',$id)->select();
         $post->members = $MemberModel->where('activity_id',$id)->count();
 
         $comments = \app\model\Comment::where(['activity_id'=>$id])->order(['at desc'])->paginate(10);
-        return $this->fetch('detail',['act'=>$post,'comments'=>$comments]);
+        return $this->fetch('detail',['act'=>$post,'comments'=>$comments,'members'=>$mems]);
     }
 
     public function collect()

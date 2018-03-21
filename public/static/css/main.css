@@ -108,6 +108,22 @@ body{
     /*width: 1000px;*/
     /*height:750px;*/
 }
+.members-head{
+    padding: 10px 20px;
+    background:#FFFFFF;
+    border: 1px solid #B8B8B8;
+    border-radius: 8px;
+    margin-top:10px;
+    font-size: 14px;
+}
+.members{
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+}
+.members span{
+    margin-left: 15px;
+}
 .actions span{
     margin-top:20px;
     margin-left: 20px;

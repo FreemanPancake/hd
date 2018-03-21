@@ -37,11 +37,11 @@
                         </div>
                         <div class="act-meta">
                             <span class="glyphicon glyphicon-bullhorn" style="font-size:18px;color:#00c3f5">&nbsp;</span>
-                            <span style="padding-right: 1.2em;">{$act.members}/{$act.members_limit}</span><button data-status="{$act.is_member}" class="btn btn-info" id="signup">{if !$act.is_member}报名{elseif $act.members>=$act.members_limit/}已满{else/}已报名{/if}</button>
+                            <span style="padding-right: 1.2em;">{$act.members}/{$act.members_limit}</span><button data-status="{$act.is_member}" class="btn btn-info" id="signup" data-id="{$act.id}">{if !$act.is_member}报名{elseif $act.members>=$act.members_limit/}已满{else/}已报名{/if}</button>
                         </div>
                         <div class="act-meta">
                             <span class="glyphicon glyphicon-star-empty" style="font-size:18px;color:#00c3f5">&nbsp;</span>
-                            <span ><button class="btn btn-info" data-status="{$act.is_collected}" id="collect">收藏</button> </span>
+                            <span ><button class="btn btn-info" data-status="{$act.is_collected}" id="collect" data-id="{$act.id}">{if !$act.is_collected}收藏{else/}取消收藏{/if}</button> </span>
                         </div>
                     </div>
                 </div>
@@ -53,9 +53,7 @@
 </div>
 <script>
     $("#collect").click(function (event) {
-        var id = {$act.id
-    }
-        ;
+        var id = $(this).attr('data-id');
         var status = $(this).attr('data-status');
         if (status == '0') {
             $.ajax({
@@ -95,8 +93,8 @@
     })
 
     $("#signup").click(function (event) {
-        var id = {$act.id}
-        ;
+        var id = $(this).attr('data-id');
+
         var status = $(this).attr('data-status');
         if (status == '0') {
             $.ajax({

@@ -1,0 +1,16 @@
+{extend name='base'/}
+{block name='content'/}
+<div class="container">
+    <div class="row">
+        <div class="panel">
+            <div class="page-header" style="padding-left: 20px;">
+                添加分类
+            </div>
+            <form action="{:url('admin/index/doAdd')}">
+                <input type="text" name="cat">
+                <button type="submit" class="btn btn-primary">添加</button>
+            </form>
+        </div>
+    </div>
+</div>
+{/block}

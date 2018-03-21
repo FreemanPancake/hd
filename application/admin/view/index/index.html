@@ -4,11 +4,33 @@
     <div class="row">
         <div class="panel">
             <div class="page-header">
-                今日统计
+                活动列表
             </div>
-            <div class="panel-body">
-                今日新增新闻{$news}条，新增帖子{$posts}个,新增用户{$users}个
-            </div>
+            <table class="table table-responsive">
+                <thead>
+                <th>编号</th>
+                <th>名称</th>
+                <th>时间</th>
+                <th>地点</th>
+                <th>人数限制</th>
+                <th>已报名人数</th>
+                <th>操作</th>
+                </thead>
+                <tbody>
+                {volist name='acts' id='act'}
+                <tr>
+                    <td>{$act.id}</td>
+                    <td><a href="{:url('admin/index/detail')}?id={$act.id}">{$act.name}</a></td>
+                    <td>{:date('Y-m-d H:i',$act.act_at)}</td>
+                    <td>{$act.location}</td>
+                    <td>{$act.members_limit}</td>
+                    <td>{$act.members}</td>
+                    <td><a href="{:url('admin/index/edit')}?id={$act.id}">修改</a></td>
+                    <td><a href="{:url('admin/index/delete')}?id={$act.id}">删除</a></td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

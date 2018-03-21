@@ -12,7 +12,7 @@ class User extends MyController
 
     public static $roleName=[
         1=>"管理员",
-        2=>"主编",
+        2=>"认证用户",
         3=>"普通用户"
     ];
     public function index()
@@ -140,43 +140,6 @@ class User extends MyController
         $User->save();
         echo json_encode(['code'=>1,'msg'=>"修改成功"]);
         return ;
-    }
-
-    public function myCollect()
-    {
-        $Collect = new Collect();
-        $collects1 = $Collect->alias('c')->join('news n','c.ref_id=n.id')->where('c.user_id',Session::get('user_id'))->where('c.type',1)->field('c.ref_id,n.title,n.post_at,c.id,c.type')->order('c.id desc')->paginate(10);
-        $collects2 = $Collect->alias('c')->join('news n','c.ref_id=n.id')->where('c.user_id',Session::get('user_id'))->where('c.type',2)->field('c.ref_id,n.title,n.post_at,c.id,c.type')->order('c.id desc')->paginate(10);
-
-        foreach ($collects1 as $post){
-            $post->typeName = $post->type==1?"图文新闻":"视频新闻";
-        }
-
-        return $this->fetch('myCollect',['cols'=>$collects1,'posts'=>$collects2]);
-    }
-
-    public function myComments()
-    {
-        $Collect = new \app\model\Comment();
-        $collects1 = $Collect->alias('c')->join('post n','c.ref_id=n.id')->where('c.user_id',Session::get('user_id'))->where('c.type',2)->field('c.ref_id,c.content,n.title,c.at,c.id')->order('c.id desc')->paginate(10);
-
-        return $this->fetch('myComments',['cols'=>$collects1]);
-    }
-
-    public function myPost()
-    {
-        $Collect = new \app\model\Post();
-        $collects1 = $Collect->where('user_id',Session::get('user_id'))->order('id desc')->paginate(10);
-
-        foreach ($collects1 as $post){
-            $post->collect_count = Collect::all(['type'=>2,'ref_id'=>$post->id]);
-            if($post->collect_count)
-                $post->collect_count = count($post->collect_count);
-            else
-                $post->collect_count=0;
-        }
-
-        return $this->fetch('myPosts',['cols'=>$collects1]);
     }
 
     public function apply()

@@ -1,0 +1,22 @@
+{extend name='base'/}
+{block name='content'/}
+<div class="container">
+    <div class="row">
+        <div class="panel">
+            <div class="page-header" style="padding-left: 20px;">
+                认证申请
+            </div>
+            <div style="padding-left: 20px;">
+                <p>用户名：{$apply.user.name}</p>
+                <p>申请时间：{:date('Y-m-d H:i',$apply.at)}</p>
+                <p>手机：{$apply.mobile}</p>
+                <p>申请理由：{$apply.reason}</p>
+            </div>
+            <div style="padding-left: 20px;">
+                <a class="btn btn-primary" href="{:url('admin/index/pass')}?id={$apply.id}&status=1">通过</a>
+                <a  class="btn btn-primary" href="{:url('admin/index/pass')}?id={$apply.id}&status=2">拒绝</a>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}

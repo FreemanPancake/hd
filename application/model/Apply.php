@@ -13,5 +13,8 @@ use think\Model;
 
 class Apply extends Model
 {
-
+        public function user()
+        {
+            return $this->belongsTo('User');
+        }
 }

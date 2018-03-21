@@ -15,10 +15,11 @@ use think\Session;
 
 class MyController extends Controller
 {
+
     protected function loginCheck()
     {
-        if(!Session::get("user_id")){
-            $this->redirect(url('index/user/login'));
+        if(!Session::get("admin_id")){
+            $this->redirect(url('admin/user/login'));
         }
     }
 

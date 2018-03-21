@@ -15,9 +15,12 @@ class User extends model
         '0'=>"禁用",
         '1'=>'启用'
     ];
-    public function getByUserAndPass($user,$pass)
+    public function getByUserAndPass($user,$pass,$isAdmin=false)
     {
-        return self::where('name',$user)->where('password',$pass)->where('status',1)->find();
+        $res = self::where('name',$user)->where('password',$pass)->where('status',1);
+        if($isAdmin)
+            $res = $res->where('role',1);
+        return $res->find();
     }
 
     public function roleName()

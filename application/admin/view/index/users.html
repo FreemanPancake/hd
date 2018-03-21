@@ -1,0 +1,31 @@
+{extend name='base'/}
+{block name='content'/}
+<div class="container">
+    <div class="row" >
+        <table class="table table-responsive">
+            <thead>
+            <th>编号</th>
+            <th>用户名</th>
+            <th>角色</th>
+            <th>email</th>
+            <th>注册时间</th>
+            <th>认证申请</th>
+            </thead>
+            {if $users}
+            <tbody>
+                {volist name='users' id='user'}
+                <tr>
+                    <td>{$user.id}</td>
+                    <td>{$user.name}</td>
+                    <td>{$user.roleName}</td>
+                    <td>{$user.email}</td>
+                    <td>{:date('Y-m-d H:i:s',$user.register_at)}</td>
+                    <td>{if $user->apply}{if $user.apply.status==1}已通过{elseif $user.apply.status==2/}已拒绝{else/}<a href="{:url('admin/index/apply')}?id={$user.apply.id}">查看申请</a>{/if}{/if}</td>
+                </tr>
+            {/volist}
+            </tbody>
+            {/if}
+        </table>
+    </div>
+</div>
+{/block}
