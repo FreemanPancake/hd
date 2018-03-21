@@ -1,4 +1,4 @@
-{extend name='base'/} 
+{extend name='base'/}
 {block name='content'/}
 <div class="row">
     <div class="col-lg-12">
@@ -21,8 +21,12 @@
         </div>
     </div>
     <div class="actions">
-        <span id="signup"  class="btn btn-primary">报名</span>
-        <span id="#collect" class="btn btn-primary" data-status="{$act.is_collected}">{if !$act.is_collected}收藏{else/}取消收藏{/if}</span>
+        <span id="signup" class="btn btn-primary" data-status="{$act.is_member}">{if !$act.is_member}报名{elseif $act.members>=$act.members_limit/}已满{else/}已报名{/if}</span>
+        <span id="collect" class="btn btn-primary" data-status="{$act.is_collected}">{if !$act.is_collected}收藏{else/}取消收藏{/if}</span>
+        {if $Think.session.user_id == $act.user_id}
+        <span id="edit"><a href="{:url('index/act/act')}?id={$act.id}" class="btn btn-primary">编辑</a></span>
+        <span id="delete"><a href="{:url('index/act/delete')}?id={$act.id}" class="btn btn-primary">删除</a></span>
+        {/if}
     </div>
 
     <div class="comments">
@@ -47,71 +51,102 @@
 </div>
 <script>
 
-        $("#comment-btn").on('click',function(event){
-            var content = $("#comment").val();
-            $.ajax({
-                    type:"POST",
-                    url:"{:url('index/comment/comment')}",
-                    dataType:'json',
-                    xhrFields:{withCredentials:true},
-                    data:{'content':content,'type':2,activity_id:{$act.id}},
-                success:function(msg){
-                if(msg.code){
-                    var div = "<div class=\"comment-item\" data-id=\"+msg.data.id+\">\n" +
-                        "            <div class=\"author\">\n" +
-                        "                <span>"+msg.data.username+"</span>\n" +
-                        "            </div>\n" +
-                        "            <div class=\"comment\">"+msg.data.content+"</div>\n" +
-                        "            <div class=\"time\">"+msg.data.time+"</div>\n" +
-                        "        </div>";
-                    $("#line").after(div);
-                    $("#comment").val('');
-                }else{
-                    alert(msg.msg);
-                }
-            }
-        });
-        });
+    $("#comment-btn").on('click', function (event) {
+        var content = $("#comment").val();
+        $.ajax({
+                type: "POST",
+                url: "{:url('index/comment/comment')}",
+                dataType: 'json',
+                xhrFields: {withCredentials: true},
+                data: {'content': content, 'type': 2, activity_id: {$act.id}
+            },
+            success
+    :
 
-        $("#collect").click(function (event) {
-            var id={$act.id};
-            var status = $(this).attr('data-status');
-            if(status =='0'){
-                $.ajax({
-                    url:"{:url('index/act/collect')}",
-                    type:"post",
-                    dataType:'json',
-                    data:{id:id},
-                    xhrFields:{withCredentials:true},
-                    success:function(msg){
-                        alert(msg.msg);
-                        if(msg.code){
-                            $("#collect").text("取消收藏");
-                            $("#collect").attr('data-status',1);
-                        }else {
-                            $("#collect").text("收藏");
-                        }
-                    }
-                })
-            }else {
-                $.ajax({
-                    url:"{:url('index/act/dis_collect')}",
-                    type:"post",
-                    dataType:'json',
-                    data:{id:id},
-                    xhrFields:{withCredentials:true},
-                    success:function(msg){
-                        alert(msg.msg);
-                        if(msg.code){
-                            $("#collect").text("收藏");
-                            $("#collect").attr('data-status',0);
-                        }else {
-                            $("#collect").text("取消收藏");
-                        }
-                    }
-                })
+        function (msg) {
+            if (msg.code) {
+                var div = "<div class=\"comment-item\" data-id=\"+msg.data.id+\">\n" +
+                    "            <div class=\"author\">\n" +
+                    "                <span>" + msg.data.username + "</span>\n" +
+                    "            </div>\n" +
+                    "            <div class=\"comment\">" + msg.data.content + "</div>\n" +
+                    "            <div class=\"time\">" + msg.data.at + "</div>\n" +
+                    "        </div>";
+                $("#line").after(div);
+                $("#comment").val('');
+            } else {
+                alert(msg.msg);
             }
-        })
+        }
+    })
+        ;
+    });
+
+    $("#collect").click(function (event) {
+        var id = {$act.id
+    }
+        ;
+        var status = $(this).attr('data-status');
+        if (status == '0') {
+            $.ajax({
+                url: "{:url('index/act/collect')}",
+                type: "post",
+                dataType: 'json',
+                data: {id: id},
+                xhrFields: {withCredentials: true},
+                success: function (msg) {
+                    alert(msg.msg);
+                    if (msg.code) {
+                        $("#collect").text("取消收藏");
+                        $("#collect").attr('data-status', 1);
+                    } else {
+                        $("#collect").text("收藏");
+                    }
+                }
+            })
+        } else {
+            $.ajax({
+                url: "{:url('index/act/dis_collect')}",
+                type: "post",
+                dataType: 'json',
+                data: {id: id},
+                xhrFields: {withCredentials: true},
+                success: function (msg) {
+                    alert(msg.msg);
+                    if (msg.code) {
+                        $("#collect").text("收藏");
+                        $("#collect").attr('data-status', 0);
+                    } else {
+                        $("#collect").text("取消收藏");
+                    }
+                }
+            })
+        }
+    })
+
+    $("#signup").click(function (event) {
+        var id = {$act.id}
+        ;
+        var status = $(this).attr('data-status');
+        if (status == '0') {
+            $.ajax({
+                url: "{:url('index/act/signup')}",
+                type: "post",
+                dataType: 'json',
+                data: {id: id},
+                xhrFields: {withCredentials: true},
+                success: function (msg) {
+                    alert(msg.msg);
+                    if (msg.code) {
+                        $("#signup").text("已报名");
+                        $("#signup").attr('data-status', 1);
+                    } else {
+                        $("#signup").text("报名");
+                    }
+                }
+            })
+        }
+    })
 
 </script>
 {/block}

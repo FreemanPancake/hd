@@ -11,37 +11,37 @@
                 <div class="row">
                     <div class="col-md-9">
                         <div class="act-header">
-                            <span class="act-cat">精选优惠</span>
-                            <span class="act-name"><a href="{:url('index/act/detail')}?id={$act.id}">魅族应用商店抽5元话费活动 限魅族手机参与！魅族应用商店抽5元话费活动 限魅族手机参与</a></span>
+                            <span class="act-cat">{$act.cat.name}</span>
+                            <span class="act-name"><a href="{:url('index/act/detail')}?id={$act.id}">{$act.name}</a></span>
 
                         </div>
                         <div class="img-frame">
-                            <img class="act-img" src="__STATIC__/static/image/sample.jpg">
+                            <img class="act-img" src="__STATIC__/static/image/{$act.face}">
                         </div>
                         <div class="act-body">
-                            <span>魅族官网提供魅族 PRO 系列、MX 系列、魅族配件系列产品的预约和购买。提供最新魅族产品资讯、完善的售后服务、社区在线交流、手机固件/应用下载。</span>
+                            <span>{:mb_substr($act.txt,0.50)}</span>
                         </div>
                     </div>
                     <div class="col-md-3 act-meta-frame">
                         <div class="act-meta">
                             <span class="glyphicon glyphicon-user" style="font-size:18px;color:#00c3f5">&nbsp;</span>
-                            <span>一轮明月照九州</span>
+                            <span>{$act.user.name}</span>
                         </div>
                         <div class="act-meta">
                                 <span class="glyphicon glyphicon-lock" style="font-size:18px;color:#00c3f5">&nbsp;</span>
-                                <span>中国银行62开头信用卡用户可参与</span>
+                                <span>{$act.limit}</span>
                         </div>
                         <div class="act-meta">
                             <span class="glyphicon glyphicon-map-marker" style="font-size:18px;color:#00c3f5">&nbsp;</span>
-                            <span>万达广场</span>
+                            <span>{$act.location}</span>
                         </div>
                         <div class="act-meta">
                             <span class="glyphicon glyphicon-bullhorn" style="font-size:18px;color:#00c3f5">&nbsp;</span>
-                            <span style="padding-right: 1.2em;">1/60</span><button class="btn btn-info">可报名</button>
+                            <span style="padding-right: 1.2em;">{$act.members}/{$act.members_limit}</span><button data-status="{$act.is_member}" class="btn btn-info" id="signup">{if !$act.is_member}报名{elseif $act.members>=$act.members_limit/}已满{else/}已报名{/if}</button>
                         </div>
                         <div class="act-meta">
                             <span class="glyphicon glyphicon-star-empty" style="font-size:18px;color:#00c3f5">&nbsp;</span>
-                            <span class="btn btn-info">收藏</span>
+                            <span ><button class="btn btn-info" data-status="{$act.is_collected}" id="collect">收藏</button> </span>
                         </div>
                     </div>
                 </div>
@@ -51,4 +51,71 @@
         </div>
     </div>
 </div>
+<script>
+    $("#collect").click(function (event) {
+        var id = {$act.id
+    }
+        ;
+        var status = $(this).attr('data-status');
+        if (status == '0') {
+            $.ajax({
+                url: "{:url('index/act/collect')}",
+                type: "post",
+                dataType: 'json',
+                data: {id: id},
+                xhrFields: {withCredentials: true},
+                success: function (msg) {
+                    alert(msg.msg);
+                    if (msg.code) {
+                        $("#collect").text("取消收藏");
+                        $("#collect").attr('data-status', 1);
+                    } else {
+                        $("#collect").text("收藏");
+                    }
+                }
+            })
+        } else {
+            $.ajax({
+                url: "{:url('index/act/dis_collect')}",
+                type: "post",
+                dataType: 'json',
+                data: {id: id},
+                xhrFields: {withCredentials: true},
+                success: function (msg) {
+                    alert(msg.msg);
+                    if (msg.code) {
+                        $("#collect").text("收藏");
+                        $("#collect").attr('data-status', 0);
+                    } else {
+                        $("#collect").text("取消收藏");
+                    }
+                }
+            })
+        }
+    })
+
+    $("#signup").click(function (event) {
+        var id = {$act.id}
+        ;
+        var status = $(this).attr('data-status');
+        if (status == '0') {
+            $.ajax({
+                url: "{:url('index/act/signup')}",
+                type: "post",
+                dataType: 'json',
+                data: {id: id},
+                xhrFields: {withCredentials: true},
+                success: function (msg) {
+                    alert(msg.msg);
+                    if (msg.code) {
+                        $("#signup").text("已报名");
+                        $("#signup").attr('data-status', 1);
+                    } else {
+                        $("#signup").text("报名");
+                    }
+                }
+            })
+        }
+    })
+</script>
 {/block}

@@ -93,6 +93,7 @@ body{
     background:#FFFFFF;
     border: 1px solid #B8B8B8;
     border-radius: 8px;
+    margin-top:10px;
     /* height:800px; */
 }
 .act-detail .meta{
@@ -104,11 +105,15 @@ body{
     font-size: 16px;
 }
 .act-detail img{
-    width: 1060px;
+    /*width: 1000px;*/
+    /*height:750px;*/
 }
 .actions span{
     margin-top:20px;
     margin-left: 20px;
+}
+.actions a{
+    margin-top:20px;
 }
 .comment-item{
     display: flex;
@@ -118,6 +123,7 @@ body{
 .author{
     margin-left: 20px;
     color:#69C2D4;
+    width: 80px;
 }
 .comment{
     margin-left: 20px;

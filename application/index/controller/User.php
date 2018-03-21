@@ -1,6 +1,7 @@
 <?php
 namespace app\index\controller;
 
+use app\model\Apply;
 use app\model\Collect;
 use think\Controller;
 use app\model\User as UserModel;
@@ -48,7 +49,7 @@ class User extends MyController
             Session::set('user_id',$User->id);
             Session::set('user_name',$User->name);
 
-            Session::set('role',2);
+            Session::set('role',$User->role);
 
             $this->success("登录成功",'index/index/index',null,2);
         }else{
@@ -180,17 +181,22 @@ class User extends MyController
 
     public function apply()
     {
+        $apply = Apply::get(['user_id'=>Session::get('user_id')]);
+
         $return_url = $this->request->header('referer');
-        return $this->fetch('apply',['return_url'=>$return_url]);
+        return $this->fetch('apply',['return_url'=>$return_url,'apply'=>$apply]);
     }
 
     public function doApply()
     {
         $reason = $this->request->param('reason');
+        $mobile = $this->request->param('mobile');
 
-        $role = 3;
         if(!$reason){
             $this->error("请填写申请理由");
+        }
+        if(!$mobile){
+            $this->error("请填写手机号");
         }
 
         $return  = $this->request->param('return_url');
@@ -199,11 +205,12 @@ class User extends MyController
         if(preg_match("/\/user\/apply/",$return)){
             $return = url('index/index/index');
         }
-        $User = \app\model\User::get(Session::get('user_id'));
-        $User->role =2;
-        $User->role_status = 0;
-        $User->role_reason = $reason;
-        if($User->save()){
+        $apply = new Apply();
+        $apply->user_id = Session::get('user_id');
+        $apply->mobile = $mobile;
+        $apply->reason = $reason;
+        $apply->status = 0;
+        if($apply->save()){
             $this->success("申请成功，请等待审核",$return);
         }else{
             $this->error("申请失败");

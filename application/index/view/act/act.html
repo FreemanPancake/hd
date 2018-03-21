@@ -23,7 +23,11 @@
                 <input type="hidden" name='txt'>
                 <div class="form-group">
                     <label for="location">地点：</label>
-                    <input type="text" name="location" id="location" class="form-control" {if $act} value="{$act.name}" {/if}>
+                    <input type="text" name="location" id="location" class="form-control" {if $act} value="{$act.location}" {/if}>
+                </div>
+                <div class="form-group">
+                    <label for="limit">活动说明/限制条件：</label>
+                    <input type="text" name="limit" id="limit" class="form-control" {if $act} value="{$act.limit}" {/if}>
                 </div>
                 <div class="form-inline">
                         <label for="act_at">活动时间：</label>
@@ -55,9 +59,8 @@
                                 ue.setContent('{$act.desc}');
                             });
                             {/if}
-                            $("#sub-btn").onsubmit(function (event) {
-        
-                                $("input:hidden")[0].val(ue.getContent())
+                            $("form:first").on('submit',function (event) {
+                                $("input[name=txt]").val(ue.getContentTxt())
                             })
                         </script>
                     </div>

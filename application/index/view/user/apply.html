@@ -5,9 +5,11 @@
         <div class="mod-body ">
             <div >
                 <h2>申请认证</h2>
+                {if !$apply}
                 <form id="login_form" method="post"
                       action="{:url('index/user/doApply')}">
                     <input type="hidden" name="return_url" value="{$Request.header.referer}"/>
+                    手机号码：<input type="text" name="mobile" style="margin-bottom: 20px;" />
                     <ul class="list-unstyled">
 
                           <textarea name="reason" rows="4" class="form-control" placeholder="请填写申请理由"></textarea>
@@ -22,6 +24,9 @@
                         </li>
                     </ul>
                 </form>
+                {else/}
+                您已经申请过认证，请耐心等待审核
+                {/if}
             </div>
         </div>
     </div>

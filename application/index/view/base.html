@@ -30,7 +30,7 @@
                 <div class="navbar-body">
                     <ul class="nav navbar-nav">
                         <li><a href="{:url('index/index/index')}">首页</a></li>
-                        {if $Think.session.user_id && $Think.session.role==3}
+                        {if $Think.session.user_id && $Think.session.role==2}
                         <li><a href="{:url('index/act/act')}">发布活动</a></li>
                         {/if}
                         {if $Think.session.user_id && $Think.session.role==3}

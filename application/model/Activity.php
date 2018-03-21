@@ -13,5 +13,13 @@ use think\Model;
 
 class Activity extends Model
 {
+    public function user()
+    {
+        return $this->belongsTo('User');
+    }
 
+    public function cat()
+    {
+        return $this->belongsTo('Category');
+    }
 }
